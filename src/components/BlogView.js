@@ -59,6 +59,25 @@ const BlogView = () => {
           return(<button onClick={() => handleBlogDelete(blog.id)}>delete</button>)
         }
       }
+
+      const addComment = async (event) => {
+        event.preventDefault()
+
+        const comment = event.target.comment.value
+
+        console.log('comment')
+        const updatedBlogObject = {
+            ...blog,
+            comments: blog.comments.append(comment)
+        }
+
+        try {
+            await blogService.updateOne(blog.id.toString(), updatedBlogObject)
+            dispatch({ type: 'blogs/upVoteBlog', updatedBlog: updatedBlogObject })
+        } catch (exception) {
+            dispatch({ type: 'blogs/upVoteBlog', updatedBlog: updatedBlogObject })
+        }
+      }
     
       return (
         <div>
@@ -68,6 +87,17 @@ const BlogView = () => {
             <label key={blog.likes}>likes</label>: {blog.likes} <button onClick={() => handleAddLike(blog.id)}>like</button><br />
             added by {blog.users.map(user => <label key={user.id}>{user.name}</label>)}<br />
             {showDeleteButton(user.username)}
+            <h3>comments</h3>
+            <form onSubmit={addComment}>
+                <div> 
+                    <input name='comment' placeholder='type comment here...'></input><button type="submit">Add Coment</button>
+                </div>
+                <div>
+                    <ul>
+                        {blog.comments.map(comm => <li>{comm}</li>)}
+                    </ul>
+                </div>
+            </form>
           </div>
         </div>
      

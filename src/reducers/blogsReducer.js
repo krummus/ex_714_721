@@ -9,11 +9,17 @@ const blogsSlice = createSlice({
       state.push({
         content,
         id: 1,
-        likes: 0
+        likes: 0,
+        comments: []
       })
     },
 
     upVoteBlog(state, action) {
+      const id = action.updatedBlog.id
+      return state.map(blog => blog.id !== id ? blog : action.updatedBlog)
+    },
+
+    addComment(state, action) {
       const id = action.updatedBlog.id
       return state.map(blog => blog.id !== id ? blog : action.updatedBlog)
     },
@@ -28,6 +34,6 @@ const blogsSlice = createSlice({
   }
 })
 
-export const { createBlog, upVoteBlog, removeBlog, setBlogs } = blogsSlice.actions
+export const { createBlog, upVoteBlog, addComment, removeBlog, setBlogs } = blogsSlice.actions
 
 export default blogsSlice.reducer
