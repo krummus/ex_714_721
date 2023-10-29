@@ -101,9 +101,9 @@ const BlogView = () => {
         <div>
           <div style={blogListStyle}>
             <h2>{blog.title} {blog.author}</h2>
-            <Link to={blog.url}>{blog.url}</Link><br />
-            <label key={blog.likes}>likes</label>: {blog.likes} <Button variant='outlined' size ='medium' onClick={() => handleAddLike(blog.id)}>like</Button><br />
-            added by {blog.users.map(user => <label key={user.id}>{user.name}</label>)}<br />
+            <Link class='blogLinkText' to={blog.url}>{blog.url}</Link><br />
+            <label class='blogLikeTitle' key={blog.likes}>Likes</label>: <b>{blog.likes}</b> <Button variant='outlined' size ='medium' onClick={() => handleAddLike(blog.id)}>like</Button><br />
+            <label class='addedByText'>Added by: {blog.users.map(user => <label key={user.id}>{user.name}</label>)}</label><br />
             {showDeleteButton(user.username)}
             <h3>comments</h3>
             <form onSubmit={addComment}>

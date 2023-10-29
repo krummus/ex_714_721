@@ -31,9 +31,9 @@ const App = () => {
 
   return (
     <Router>
-      <div class='topBar'>
-          <Link style={padding} to='/'><Button variant='outlined' size ='medium'>home</Button></Link>
-          <Link style={padding} to='/users'><Button variant='outlined' size ='medium'>users</Button></Link>
+      <div class='loggedInPanelText'>
+          <Link to='/'><Button variant='outlined' size ='medium'>home</Button></Link>
+          <Link to='/users'><Button variant='outlined' size ='medium'>users</Button></Link>
         {user.username === '' ? <LoginForm /> : <LoggedInUserPanel />}
       </div>
       <div>

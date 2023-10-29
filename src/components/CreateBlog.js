@@ -48,7 +48,7 @@ const CreateBlog = ({user}) => {
 
     return(
     <div>
-        <h3>Create Blog</h3>
+        <h3 class='createBlog'>Create Blog</h3>
         <form onSubmit={addBlog}>
             <div>
                 <TextField label='Title' variant='outlined' name='title' size='small' />
