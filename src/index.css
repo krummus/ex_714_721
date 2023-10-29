@@ -17,3 +17,75 @@
   padding: 10px;
   margin-bottom: 10px;
 }
+
+.link_Styles {
+  padding: 0 30px;
+}
+
+a:link.top, a:visited {
+  background-color: white;
+  color: black;
+  border: 2px solid green;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:link.blog, a:visited {
+  background-color: white;
+  color: black;
+  border: 2px solid green;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover, a:active {
+  background-color: red;
+}
+
+.top-links {
+  font-family: Arial;
+  size: 40;
+  font-size: larger;
+}
+
+h1.blogTitle {
+  font-family: 'Arial';
+  color: black;
+  text-align: center;
+}
+
+h3.blogList {
+  font-family: 'Arial';
+  color: black;
+  font-size: large;
+  text-align: center;
+}
+
+h3.createBlog {
+  font-family: 'Arial';
+  color: black;
+  font-size: large;
+  text-align: center;
+}
+
+ul {
+  list-style: none;
+}
+
+ul.blogList {
+  list-style: none;
+  text-align: left;
+  align-items: center;
+}
+
+div.blogList {
+  text-align: center;
+}
+
+.topBar {
+  background-color: aquamarine;
+}

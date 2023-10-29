@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
+import Button from '@mui/material/Button';
 
 const LoggedInUserPanel = () => {
     const dispatch = useDispatch()
@@ -14,9 +15,9 @@ const LoggedInUserPanel = () => {
     console.log(user)
 
     return(
-        <div>
-            {user.username} - logged in - <button onClick={handleLogout}>log out</button>
-        </div>
+        <>
+            <strong>{user.username} - logged in - <Button variant='outlined' size ='large' onClick={handleLogout}>log out</Button></strong>
+        </>
     )
 }
 

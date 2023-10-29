@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux'
 import blogService from '../services/blogs'
 import { useParams, Link } from 'react-router-dom'
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
 const BlogView = () => {
     const dispatch = useDispatch()
@@ -65,18 +67,34 @@ const BlogView = () => {
 
         const comment = event.target.comment.value
 
-        console.log('comment')
-        const updatedBlogObject = {
-            ...blog,
-            comments: blog.comments.append(comment)
+        if (comment.length > 2) {
+            const updatedBlogObject = {
+                ...blog,
+                comments: blog.comments.concat(comment),
+                users: blog.users.map(usr => usr.id)
+            }
+            console.log(updatedBlogObject, 'updated object')
+
+            const updatedBlogObjectRedux = {
+              ...blog,
+              comments: blog.comments.concat(comment)
+          }
+            
+            try {
+                await blogService.updateOne(blog.id.toString(), updatedBlogObject)
+                dispatch({ type: 'blogs/upVoteBlog', updatedBlog: updatedBlogObjectRedux })
+                dispatch({ type: 'notifications/makeNotification', message: `comment added`, errorState: false })
+                setTimeout(() => {dispatch({ type: 'notifications/removeNotification' })}, 3000)
+            } catch (exception) {
+                dispatch({ type: 'notifications/makeNotification', message: exception.message, errorState: true })
+                setTimeout(() => {dispatch({ type: 'notifications/removeNotification' })}, 3000)
+            }
+        }else{
+            dispatch({ type: 'notifications/makeNotification', message: 'comment too short', errorState: true })
+            setTimeout(() => {dispatch({ type: 'notifications/removeNotification' })}, 3000)
         }
 
-        try {
-            await blogService.updateOne(blog.id.toString(), updatedBlogObject)
-            dispatch({ type: 'blogs/upVoteBlog', updatedBlog: updatedBlogObject })
-        } catch (exception) {
-            dispatch({ type: 'blogs/upVoteBlog', updatedBlog: updatedBlogObject })
-        }
+        event.target.comment.value = ''
       }
     
       return (
@@ -84,17 +102,17 @@ const BlogView = () => {
           <div style={blogListStyle}>
             <h2>{blog.title} {blog.author}</h2>
             <Link to={blog.url}>{blog.url}</Link><br />
-            <label key={blog.likes}>likes</label>: {blog.likes} <button onClick={() => handleAddLike(blog.id)}>like</button><br />
+            <label key={blog.likes}>likes</label>: {blog.likes} <Button variant='outlined' size ='medium' onClick={() => handleAddLike(blog.id)}>like</Button><br />
             added by {blog.users.map(user => <label key={user.id}>{user.name}</label>)}<br />
             {showDeleteButton(user.username)}
             <h3>comments</h3>
             <form onSubmit={addComment}>
                 <div> 
-                    <input name='comment' placeholder='type comment here...'></input><button type="submit">Add Coment</button>
+                    <TextField label="Enter comment" variant="outlined" name='comment' placeholder='type comment here...'/><Button variant='outlined' size ='large' type='submit'>Add Coment</Button>
                 </div>
                 <div>
                     <ul>
-                        {blog.comments.map(comm => <li>{comm}</li>)}
+                        {blog.comments.map(comm => <li key={comm}>{comm}</li>)}
                     </ul>
                 </div>
             </form>

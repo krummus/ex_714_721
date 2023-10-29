@@ -18,7 +18,8 @@ const notificationSlice = createSlice({
       console.log(action)
       const content = action.message
       state.push({
-        message: content
+        message: content,
+        errorStyle: action.errorState
       })
     },
 

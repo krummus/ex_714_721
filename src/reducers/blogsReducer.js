@@ -5,12 +5,14 @@ const blogsSlice = createSlice({
   initialState: [],
   reducers: {
     createBlog(state, action) {
-      const content = action.payload
       state.push({
-        content,
-        id: 1,
-        likes: 0,
-        comments: []
+        title: action.title,
+        author: action.author,
+        url: action.url,
+        id: action.id,
+        likes: action.likes,
+        comments: action.comments,
+        users: action.users
       })
     },
 

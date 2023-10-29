@@ -1,5 +1,7 @@
 import { useDispatch } from 'react-redux'
 import blogService from '../services/blogs'
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
 const CreateBlog = ({user}) => {
     const dispatch = useDispatch()
@@ -19,8 +21,17 @@ const CreateBlog = ({user}) => {
         }
 
         try {
-            await blogService.createOne(newBlogObject, user.token)
-            dispatch({ type: 'blogs/createBlog', title: title, author: author, urllink: urllink })
+            const response = await blogService.createOne(newBlogObject, user.token)
+            dispatch({ type: 'blogs/createBlog',
+                        title: response.title, 
+                        author: response.author, 
+                        urllink: response.urllink,
+                        likes: response.likes,
+                        users: response.users,
+                        comments: response.comments,
+                        id: response.id    
+                    })
+
             dispatch({ type: 'notifications/makeNotification', message: `a new blog ${newBlogObject.title} by ${newBlogObject.author}`, errorState: false })
             setTimeout(() => {dispatch({ type: 'notifications/removeNotification' })}, 3000)
         } catch (exception) {
@@ -40,19 +51,16 @@ const CreateBlog = ({user}) => {
         <h3>Create Blog</h3>
         <form onSubmit={addBlog}>
             <div>
-                title: 
-                <input name='title' />
+                <TextField label='Title' variant='outlined' name='title' size='small' />
             </div>
             <div>
-                author: 
-                <input name='author' />
+                <TextField label='Author' variant='outlined' name='author' size='small' />
             </div>
             <div>
-                url: 
-                <input name='urllink' />
+                <TextField label='URL' variant='outlined' name='urllink' size='small' />
             </div>
-            <div> 
-                <button type="submit">create</button>
+            <div>
+                <Button variant='outlined' size ='large' type='submit'>Create</Button> 
             </div>
         </form>
     </div>

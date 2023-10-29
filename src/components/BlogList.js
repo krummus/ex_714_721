@@ -7,12 +7,14 @@ const BlogList = () => {
     const blogs = useSelector(state => state.blogs)
 
     return(
-    <div>
-        <h3>Blogs</h3>
-        {blogs.map(blog =>
-            <Link key={blog.id} to={`/blogs/${blog.id}`}><Blog blog={blog}/></ Link>
-        )}
-    </div>
+        <div class='blogList'>
+            <h3 class='blogList'>Blogs</h3>
+            <ul class='blogList'>
+            {blogs.map(blog =>
+                <li><Link key={blog.id} to={`/blogs/${blog.id}`}><Blog blog={blog}/></ Link></li>
+            )}
+            </ul>
+        </div>
     )
 }
 
